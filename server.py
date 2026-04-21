@@ -296,6 +296,12 @@ async def auth_change_password(request):
 # For Cloudflare Tunnel or reverse proxy to ping, preventing idle timeout
 # 供 Cloudflare Tunnel 或反代定期 ping，防止空闲超时断连
 # =============================================================
+@mcp.custom_route("/", methods=["GET"])
+async def root_redirect(request):
+    from starlette.responses import RedirectResponse
+    return RedirectResponse(url="/dashboard")
+
+
 @mcp.custom_route("/health", methods=["GET"])
 async def health_check(request):
     from starlette.responses import JSONResponse
